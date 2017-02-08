@@ -27,7 +27,7 @@ float quasi(float interferenceAngle, vec2 point) {
 }
 
 void main() {
-  float b = quasi(iGlobalTime*0.002, (position)*150.);
+  float b = quasi(iGlobalTime*0.002, (position)*100.);
   vec4 c1 = vec4(0.0,0.,0.2,1.);
   vec4 c2 = vec4(1.5,0.7,0.,1.);
   gl_FragColor = mix(c1,c2,b);

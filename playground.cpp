@@ -32,7 +32,7 @@ Playground::Playground()
 
 void Playground::setT(qreal t)
 {
-    m_t += 0.01;
+    m_t += 0.016;  // 60 fps
     emit tChanged();
     if (window())
         window()->update();

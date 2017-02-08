@@ -136,8 +136,8 @@ ApplicationWindow {
                 loops: Animation.Infinite
                 running: true
                 from: 0
-                to: Math.PI * 2
-                duration: 6914
+                to: 1
+                duration: 1000
             }
             source: document.text
         }
