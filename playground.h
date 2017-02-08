@@ -42,6 +42,7 @@ class Playground : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(qreal t READ t WRITE setT NOTIFY tChanged)
     Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
+    Q_PROPERTY(QString compilelog READ compilelog  NOTIFY compilelogChanged)
 
 public:
     Playground();
@@ -52,9 +53,13 @@ public:
     QString source() const { return m_source; }
     void setSource(QString source);
 
+    QString compilelog() const { return m_compilelog; }
+    void setCompilelog(QString log);
+
 signals:
     void tChanged();
     void sourceChanged();
+    void compilelogChanged();
 
 public slots:
     void sync();
@@ -66,6 +71,7 @@ private slots:
 private:
     qreal m_t;
     QString m_source;
+    QString m_compilelog;
     SquircleRenderer *m_renderer;
 
 };

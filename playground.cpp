@@ -7,20 +7,20 @@
 
 QString DEFAULT_VS =
     "attribute highp vec4 vertices;"
-    "varying highp vec2 coords;"
+    "varying highp vec2 position;"
     "void main() {"
     "    gl_Position = vertices;"
-    "    coords = vertices.xy;"
+    "    position = vertices.xy;"
     "}";
 QString DEFAULT_FS =
     "uniform lowp float iGlobalTime;"
-    "varying highp vec2 coords;"
+    "varying highp vec2 position;"
     "void main() {"
     "    float t = iGlobalTime;"
-    "    lowp float i = 1. - (pow(abs(coords.x), 4.) + pow(abs(coords.y), 4.));"
-    "    i = smoothstep(t - 0.8, t + 0.8, i);"
+    "    lowp float i = 1. - (pow(abs(position.x), 4.) + pow(abs(position.y), 4.));"
+    "    i = smoothstep(sin(t) - 0.8, sin(t) + 0.8, i);"
     "    i = floor(i * 20.) / 20.;"
-    "    gl_FragColor = vec4(coords * .5 + .5, i, i);"
+    "    gl_FragColor = vec4(position * .5 + .5, i, i);"
     "}";
 
 Playground::Playground()
@@ -32,9 +32,7 @@ Playground::Playground()
 
 void Playground::setT(qreal t)
 {
-    if (t == m_t)
-        return;
-    m_t = t;
+    m_t += 0.01;
     emit tChanged();
     if (window())
         window()->update();
@@ -52,6 +50,12 @@ void Playground::setSource(QString source)
         return;
 
     m_renderer->updateProgram("", m_source);
+}
+
+void Playground::setCompilelog(QString log)
+{
+    m_compilelog = log;
+    emit compilelogChanged();
 }
 
 void Playground::handleWindowChanged(QQuickWindow *win)
@@ -128,6 +132,7 @@ void SquircleRenderer::paint()
         -1, 1,
         1, 1
     };
+
     m_program->setAttributeArray(0, GL_FLOAT, values, 2);
     m_program->setUniformValue("iGlobalTime", (float) m_t);
     m_program->setUniformValue("iResolution", QVector3D(m_viewportRect.width(), m_viewportRect.height(), 1.0));
@@ -180,6 +185,8 @@ void SquircleRenderer::linkProgram()
     m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, m_vertexSource);
     m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, m_fragmentSource);
 
+//    m_window->findChild("playground").setCompilelog(m_program->log());
+//    qDebug() << "hehe" << m_program->log();
 
     m_program->bindAttributeLocation("vertices", 0);
     m_program->link();

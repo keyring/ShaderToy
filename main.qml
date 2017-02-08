@@ -132,11 +132,12 @@ ApplicationWindow {
 
         Playground {
             id: playground
-            SequentialAnimation on t {
-                NumberAnimation { to: 1; duration: 2500; easing.type: Easing.InQuad }
-                NumberAnimation { to: 0; duration: 2500; easing.type: Easing.OutQuad }
+            NumberAnimation on t {
                 loops: Animation.Infinite
                 running: true
+                from: 0
+                to: Math.PI * 2
+                duration: 6914
             }
             source: document.text
         }
@@ -156,7 +157,7 @@ ApplicationWindow {
         id: label
         color: "black"
         wrapMode: Text.WordWrap
-        text: "The background here is a squircle rendered with raw OpenGL using the 'beforeRender()' signal in QQuickWindow. This text label and its border is rendered using QML"
+        text: playground.compilelog
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.bottom: parent.bottom
