@@ -5,6 +5,8 @@
 #include <QtQuick/QQuickItem>
 #include <QtGui/QOpenGLShaderProgram>
 #include <QtGui/QOpenGLFunctions>
+#include <QtGui/QOpenGLBuffer>
+#include <QtGui/QOpenGLTexture>
 
 class SquircleRenderer : public QObject, protected QOpenGLFunctions
 {
@@ -26,6 +28,8 @@ private:
     QRect m_viewportRect;
     QSize m_viewportSize;
     qreal m_t;
+    QOpenGLBuffer vbo;
+    QOpenGLTexture *textures[4];
     QOpenGLShaderProgram *m_program;
     QOpenGLShader *m_vertexShader;
     QOpenGLShader *m_fragmentShader;
@@ -33,6 +37,8 @@ private:
     QString m_fragmentSource;
     QQuickWindow *m_window;
 
+    void initializeGL();
+    void makeObject();
     void linkProgram();
 };
 
