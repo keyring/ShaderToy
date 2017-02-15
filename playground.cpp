@@ -18,6 +18,7 @@ QString DEFAULT_VS =
 QString DEFAULT_FS_HEAD =
         "uniform sampler2D iChannel0;\n"
         "uniform lowp float iGlobalTime;\n"
+        "uniform lowp vec3 iResolution;\n"
         "varying highp vec2 position;\n"
         "varying mediump vec2 texcoord;\n";
 
